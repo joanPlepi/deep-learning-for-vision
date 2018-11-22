@@ -13,7 +13,7 @@ batch_size = 50
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # load data
-data = np.load('ORL_faces.npz')
+data = np.load('data/ORL_faces.npz')
 
 train_X = torch.Tensor(data['trainX'])
 train_y = torch.Tensor(data['trainY']).long()

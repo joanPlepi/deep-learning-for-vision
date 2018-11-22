@@ -26,8 +26,6 @@ testset = torchvision.datasets.CIFAR10(root='./data', train=False,
 testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
                                          shuffle=False, num_workers=2)
 
-print(type(trainset[0][1]))
-
 
 # model definition
 class MLP(nn.Module):
