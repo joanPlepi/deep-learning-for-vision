@@ -1,2 +1,1 @@
-# lab-vision
-Assignments in lab vision
+# Lab Vision and Deep Learning for Visual Recognition
