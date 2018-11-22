@@ -6,6 +6,7 @@ import time
 def train(trainloader, model, optimizer, criterion, device, epochs, plot_epoch_losses=False, plot_iter_losses=False):
     """Trains model on a given trainloader."""
     model.train()
+    model.to(device)
 
     epoch_losses = []
     iter_losses = []
@@ -60,6 +61,7 @@ def train(trainloader, model, optimizer, criterion, device, epochs, plot_epoch_l
 def test(testloader, model, device):
     """Tests the model on a given testset and returns all true and predicted labels."""
     model.eval()
+    model.to(device)
 
     correct = 0
     total = 0

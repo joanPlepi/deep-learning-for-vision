@@ -16,10 +16,10 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 data = np.load('ORL_faces.npz')
 
 train_X = torch.Tensor(data['trainX'])
-train_y = torch.Tensor(data['trainY']).type(torch.LongTensor)
+train_y = torch.Tensor(data['trainY']).long()
 
 test_X = torch.Tensor(data['testX'])
-test_y = torch.Tensor(data['testY']).type(torch.LongTensor)
+test_y = torch.Tensor(data['testY']).long()
 
 # make trainset and testset
 # transform = transforms.Compose([
