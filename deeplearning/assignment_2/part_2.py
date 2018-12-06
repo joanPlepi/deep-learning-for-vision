@@ -1,10 +1,9 @@
 import torch
 import numpy as np
-import torchvision.transforms as transforms
+import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
 import torch.nn as nn
-import torch.optim as optim
-import helpers
+from deeplearning.miscs import helpers
 
 
 input_dim = 1 * 92 * 112
@@ -54,10 +53,10 @@ class MLP(nn.Module):
 # training
 model = MLP(input_dim, [100, 100], output_dim)
 
-optim = optim.SGD(model.parameters(), lr=1e-6, momentum=0.9, weight_decay=0.1)
+optimizer = optim.SGD(model.parameters(), lr=1e-6, momentum=0.9, weight_decay=0.1)
 criterion = nn.CrossEntropyLoss()
 epochs = 50
-helpers.train(trainloader, model, optim, criterion, device, epochs, plot_epoch_losses=True, plot_iter_losses=True)
+helpers.train(trainloader, model, optimizer, criterion, device, epochs, plot_epoch_losses=True, plot_iter_losses=True)
 
 # testing
 train_acc = helpers.test(trainloader, model, device)
