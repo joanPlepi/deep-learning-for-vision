@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import time
 
 
-def train(trainloader, model, optimizer, criterion, device, epochs, plot_epoch_losses=False, plot_iter_losses=False):
+def train(trainloader, model, optimizer, criterion, device, epochs,
+          l1_reg=0, plot_epoch_losses=False, plot_iter_losses=False):
     """Trains model on a given trainloader."""
     model.train()
     model.to(device)
@@ -26,6 +27,13 @@ def train(trainloader, model, optimizer, criterion, device, epochs, plot_epoch_l
             outputs = model(images)
             loss = criterion(outputs, labels)
 
+            if l1_reg != 0:
+                l1_sum = 0.0
+                for param in model.parameters():
+                    l1_sum += torch.norm(param, 1)
+
+                loss += l1_reg * l1_sum
+
             # backward
             loss.backward()
             optimizer.step()
@@ -36,7 +44,7 @@ def train(trainloader, model, optimizer, criterion, device, epochs, plot_epoch_l
 
         epoch_loss = loss_sum / (i + 1)
         epoch_losses.append(epoch_loss)
-        print('Epoch: [{}/{}], total iters: {}, loss: {:.5f}, time: {:.5f} sec.'.format(epoch,
+        print('Epoch: [{}/{}], total iters: {}, loss: {:.5f}, time: {:.5f} sec.'.format(epoch + 1,
                                                                                         epochs,
                                                                                         (epoch + 1) * (i + 1),
                                                                                         epoch_loss,
