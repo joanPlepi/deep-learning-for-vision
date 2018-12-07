@@ -14,16 +14,21 @@ model = torch.nn.Sequential(
 
 criterion = torch.nn.MSELoss()
 lr = 1e-4
-weight_decay = 0.0  # for torch.optim.SGD
-lmbd = 0.1  # for custom L2 regularization
+weight_decay = 0.00  # for torch.optim.SGD
+lmbd = 0.01  # for custom L2 regularization
 
 optimizer = torch.optim.SGD(model.parameters(), lr=lr, weight_decay=weight_decay)
+
+losses = []
 
 for t in range(100):
     y_pred = model(x)
 
     # Compute and print loss.
     loss = criterion(y_pred, y)
+    # print(loss)
+
+    losses.append(loss)
 
     optimizer.zero_grad()
 
@@ -34,7 +39,7 @@ for t in range(100):
         else:
             reg_loss = reg_loss + 0.5 * param.norm(2)**2
 
-    loss += lmbd * reg_loss
+    loss = loss + lmbd * reg_loss
 
     loss.backward()
 

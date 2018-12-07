@@ -30,8 +30,8 @@ def train(trainloader, model, optimizer, criterion, device, epochs,
             loss = criterion(outputs, labels)
 
             # record losses before regularization
-            loss_sum += loss
-            train_iter_losses.append(loss)
+            loss_sum += loss.item()
+            train_iter_losses.append(loss.item())
 
             # add regularization loss, initialize to None for autograd
             l1_reg_loss = None
@@ -46,9 +46,9 @@ def train(trainloader, model, optimizer, criterion, device, epochs,
 
                 # add L2 regularization
                 if l2_reg_loss is None:
-                    l2_reg_loss = 0.5 * param.norm(2)**2
+                    l2_reg_loss = 0.5 * param.norm(2) ** 2
                 else:
-                    l2_reg_loss = l2_reg_loss + 0.5 * param.norm(2)**2
+                    l2_reg_loss = l2_reg_loss + 0.5 * param.norm(2) ** 2
 
             loss += l1_reg * l1_reg_loss
             loss += l2_reg * l2_reg_loss
@@ -91,6 +91,6 @@ def test(testloader, model, criterion, device):
             probs, pred_labels = torch.max(outputs.data, 1)
             correct += (pred_labels == labels).sum().item()
             total += labels.size(0)
-            loss += criterion(outputs, labels)
+            loss += criterion(outputs, labels).item()
 
-    return 100 * correct / total, loss
+    return 100 * correct / total, loss / (i + 1)

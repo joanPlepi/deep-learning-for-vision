@@ -56,9 +56,9 @@ model = MLP(input_dim, [100, 100], output_dim)
 optimizer = optim.SGD(model.parameters(), lr=1e-6, momentum=0.9, weight_decay=0.1)
 criterion = nn.CrossEntropyLoss()
 epochs = 50
-helpers.train(trainloader, model, optimizer, criterion, device, epochs, plot_epoch_losses=True, plot_iter_losses=True)
+helpers.train(trainloader, model, optimizer, criterion, device, epochs)
 
 # testing
-train_acc = helpers.test(trainloader, model, device)
-test_acc = helpers.test(testloader, model, device)
+train_acc = helpers.test(trainloader, model, criterion, device)[0]
+test_acc = helpers.test(testloader, model, criterion, device)[0]
 print("Trainset accuracy: {:.3f}%, testset: {:.3f}%".format(train_acc, test_acc))
