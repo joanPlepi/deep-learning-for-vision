@@ -1,1 +1,1 @@
-# Lab Vision and Deep Learning for Visual Recognition
+# Deep Learning for Computer Vision 
